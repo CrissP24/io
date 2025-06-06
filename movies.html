@@ -116,22 +116,159 @@
       padding: 2rem 1rem;
       background: linear-gradient(to bottom, #000, #1a1a1a);
     }
-    .additional-carousel img {
-      width: 160px;
-      height: 240px;
-      object-fit: cover;
-      border-radius: 0.25rem;
-      transition: transform 0.3s ease;
-    }
-    .additional-carousel .movie-card:hover img {
-      transform: scale(1.1);
-    }
     .modal-video {
       width: 100%;
       height: 200px;
       object-fit: cover;
       border-radius: 0.5rem;
       margin-bottom: 1rem;
+    }
+    .info-card {
+      background: linear-gradient(145deg, rgba(20, 20, 40, 0.9), rgba(40, 40, 60, 0.9));
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      text-align: left;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+      backdrop-filter: blur(5px);
+      cursor: pointer;
+    }
+    .info-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+    .info-card h3 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+    .info-card p {
+      font-size: 1rem;
+      color: #ccc;
+      margin-bottom: 0.5rem;
+    }
+    .info-card ul {
+      list-style-type: disc;
+      padding-left: 1.5rem;
+      color: #ccc;
+    }
+    .info-card li {
+      margin-bottom: 0.5rem;
+    }
+    .stage-container {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 1rem 0;
+      background: #000;
+      gap: 1.5rem;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .stage-container::-webkit-scrollbar {
+      display: none;
+    }
+    .stage-card {
+      position: relative;
+      flex: 0 0 auto;
+      margin-right: 0.75rem;
+      width: 180px;
+      height: 270px;
+      background: #141414;
+      border-radius: 0.25rem;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .stage-card:hover {
+      transform: scale(1.1);
+      z-index: 1;
+    }
+    .stage-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .stage-number {
+      position: absolute;
+      top: -25px;
+      left: -25px;
+      font-size: 5rem;
+      font-weight: 900;
+      color: #000;
+      text-shadow:
+        -3px -3px 0 #fff,
+         3px -3px 0 #fff,
+        -3px  3px 0 #fff,
+         3px  3px 0 #fff;
+      font-family: 'Arial Black', sans-serif;
+      z-index: 2;
+    }
+    .stage-title {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 0.5rem;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-align: center;
+      z-index: 2;
+    }
+    .overlay-card {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      width: 90%;
+      max-width: 600px;
+      background: rgba(20, 20, 40, 0.95);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      z-index: 30;
+      padding: 1.5rem;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    }
+    .overlay-card.active {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    .overlay-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .overlay-card h3 {
+      font-size: 1.75rem;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .overlay-card p {
+      font-size: 1rem;
+      color: #ccc;
+      margin-bottom: 1rem;
+    }
+    .close-overlay {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      font-size: 1.5rem;
+      color: #fff;
+      cursor: pointer;
+      background: transparent;
+      border: none;
     }
   </style>
 </head>
@@ -144,77 +281,112 @@
     </div>
   </nav>
 
-
-//DEFINICION DE LA Toma de decisiones, concepto general//
-//La toma de decisiones es fundamental porque influye directamente en los resultados de una organización, un proyecto o incluso de nuestras acciones personales. Tomar decisiones implica elegir entre dos o más alternativas, y esa elección puede tener consecuencias positivas o negativas. Por eso es crucial hacerlo de forma racional y basada en datos. En el contexto empresarial, por ejemplo, una mala decisión puede generar pérdidas económicas, mientras que una buena decisión optimiza recursos y mejora la competitividad.
-Además, permite:
-•	Resolver problemas complejos
-•	Minimizar riesgos
-•	Aprovechar oportunidades
-•	Y orientar mejor los esfuerzos del equipo de trabajo
-//
-
-
+  <!-- Sección para Toma de Decisiones e Importancia -->
   <div class="mt-16 px-8 py-6">
-    <h2 class="text-2xl font-bold mb-4">IMPORTANCIA DE LA TOMA DE DECISIONES</h2>
-    <div class="relative">
-      <div class="movie-carousel additional-carousel" id="additionalCarousel">
-        <div class="movie-card" onclick="openModal('Identificar el problema', 'Etapa 1', '3 min de lectura', 'Diagnóstico, Análisis', 'Ejemplo: Identificar la necesidad de un plan de celular económico con internet y minutos para estudiantes.')">
-          <img src="https://source.unsplash.com/random/200x300?problem" alt="Identificar">
-        </div>
-        <div class="movie-card" onclick="openModal('Recolección de información', 'Etapa 2', '3 min de lectura', 'Datos, Investigación', 'Ejemplo: Buscar planes de celular - Plan A: $10 (5 GB, 100 min), Plan B: $12 (6 GB, 200 min, redes sociales), Plan C: $8 (3 GB, 50 min).')">
-          <img src="https://source.unsplash.com/random/200x300?research" alt="Recolección">
-        </div>
-        <div class="movie-card" onclick="openModal('Análisis de alternativas', 'Etapa 3', '3 min de lectura', 'Opciones, Evaluación', 'Ejemplo: Comparar planes por gigas, minutos, redes sociales y precio para elegir el mejor.')">
-          <img src="https://source.unsplash.com/random/200x300?analysis" alt="Analizar">
-        </div>
-        <div class="movie-card" onclick="openModal('Elección de la mejor opción', 'Etapa 4', '3 min de lectura', 'Selección, Decisión', 'Ejemplo: Elegir el Plan B ($12) por más GB, minutos y redes sociales ilimitadas.')">
-          <img src="https://source.unsplash.com/random/200x300?choice" alt="Elegir">
-        </div>
-        <div class="movie-card" onclick="openModal('Implementación', 'Etapa 5', '3 min de lectura', 'Ejecución, Acción', 'Ejemplo: Contratar el Plan B a través de la app de la operadora.')">
-          <img src="https://source.unsplash.com/random/200x300?execution" alt="Implementar">
-        </div>
-        <div class="movie-card" onclick="openModal('Evaluación de resultados', 'Etapa 6', '3 min de lectura', 'Revisión, Feedback', 'Ejemplo: Verificar que el Plan B permite asistir a clases virtuales y usar redes sociales sin problemas.')">
-          <img src="https://source.unsplash.com/random/200x300?assessment" alt="Evaluar">
-        </div>
+    <h2 class="text-2xl font-bold mb-6">FUNDAMENTOS DE LA TOMA DE DECISIONES</h2>
+    <div class="reason-container">
+      <div class="info-card" style="animation-delay: 0s" onclick="openModal('¿Qué es la Toma de Decisiones?', 'Concepto General', '5 min de lectura', 'Definición, Proceso', 'La toma de decisiones es el proceso de elegir entre dos o más alternativas, evaluando sus posibles consecuencias. Es un acto fundamental en la vida diaria, en los negocios y en la gestión de proyectos, donde cada elección puede tener impactos positivos o negativos.')">
+        <h3>Definición de Toma de Decisiones</h3>
+        <p>La toma de decisiones es el proceso de elegir entre dos o más alternativas, evaluando sus posibles consecuencias.</p>
+        <p>Es un acto fundamental en la vida diaria, en los negocios y en la gestión de proyectos.</p>
       </div>
-      <button class="absolute top-10 left-0 transform -translate-y-1/2 nav-arrow" onclick="scrollLeftAdditional()">❮</button>
-      <button class="absolute top-10 right-0 transform -translate-y-1/2 nav-arrow" onclick="scrollRightAdditional()">❯</button>
+      <div class="info-card" style="animation-delay: 0.2s" onclick="openModal('Importancia de la Toma de Decisiones', 'Relevancia', '5 min de lectura', 'Impacto, Beneficios', 'Influye directamente en los resultados de una organización, un proyecto o nuestras acciones personales. Una buena decisión optimiza recursos y mejora la competitividad, mientras que una mala decisión puede generar pérdidas económicas.')">
+        <h3>Importancia de la Toma de Decisiones</h3>
+        <p>Influye directamente en los resultados de una organización, un proyecto o nuestras acciones personales.</p>
+        <p>Además, permite:</p>
+        <ul>
+          <li>Resolver problemas complejos</li>
+          <li>Minimizar riesgos</li>
+          <li>Aprovechar oportunidades</li>
+          <li>Orientar mejor los esfuerzos del equipo de trabajo</li>
+        </ul>
+      </div>
     </div>
   </div>
 
-
+  <!-- Sección mejorada para Etapas de la Toma de Decisiones -->
   <div class="mt-16 px-8 py-6">
-    <h2 class="text-2xl font-bold mb-4">ETAPAS DE LA TOMA DE DECISIONES</h2>
-    <div class="relative">
-      <div class="movie-carousel" id="movieCarousel">
-        <div class="movie-card" onclick="openModal('¿Qué es la toma de decisiones?', 'Concepto', '5 min de lectura', 'Definición, Proceso', 'Tomar decisiones implica elegir entre dos o más alternativas, y esa elección puede tener consecuencias positivas o negativas.')">
-          <img src="img/img4.jpeg" alt="Definición">
-          <div class="movie-number">1</div>
-        </div>
-        <div class="movie-card" onclick="openModal('Importancia de la toma de decisiones', 'Relevancia', '5 min de lectura', 'Impacto, Beneficios', 'Influye directamente en los resultados de una organización, un proyecto o nuestras acciones personales.')">
-          <img src="img/img4.jpeg" alt="Importancia">
-          <div class="movie-number">2</div>
-        </div>
-        <div class="movie-card" onclick="openModal('Etapas de la toma de decisiones', 'Proceso', '5 min de lectura', 'Pasos, Metodología', 'Existen diferentes modelos, desde enfoques racionales hasta los basados en intuición o información limitada.')">
-          <img src="img/img4.jpeg" alt="Etapas">
-          <div class="movie-number">3</div>
-        </div>
-        <div class="movie-card" onclick="openModal('Identificar el problema', 'Etapa 1', '3 min de lectura', 'Diagnóstico, Análisis', 'Reconocimiento claro y preciso de una situación que requiere una solución.')">
-          <img src="img/img4.jpeg" alt="Identificar">
-          <div class="movie-number">4</div>
-        </div>
-        <div class="movie-card" onclick="openModal('Recolección de información', 'Etapa 2', '3 min de lectura', 'Datos, Investigación', 'Reunir datos relevantes como hechos, cifras, opiniones y antecedentes.')">
-          <img src="img/img4.jpeg" alt="Recolección">
-          <div class="movie-number">5</div>
-        </div>
-        <div class="movie-card" onclick="openModal('Análisis de alternativas', 'Etapa 3', '3 min de lectura', 'Opciones, Evaluación', 'Estudiar posibles soluciones, evaluando ventajas, desventajas y riesgos.')">
-          <img src="img/img4.jpeg" alt="Analizar">
-          <div class="movie-number">6</div>
-        </div>
+    <h2 class="text-2xl font-bold mb-6">ETAPAS DE LA TOMA DE DECISIONES</h2>
+    <div class="stage-container">
+      <!-- Etapa 1: Identificación del Problema -->
+      <div class="stage-card" onclick="showOverlay(1)">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=180&h=270&q=80" alt="Identificación del Problema">
+        <div class="stage-number">1</div>
+        <div class="stage-title">Identificación del Problema</div>
       </div>
-      <button class="absolute top-1/2 left-0 transform -translate-y-1/2 nav-arrow" onclick="scrollLeftCarousel()">❮</button>
-      <button class="absolute top-1/2 right-0 transform -translate-y-1/2 nav-arrow" onclick="scrollRightCarousel()">❯</button>
+      <!-- Etapa 2: Recolección de Información -->
+      <div class="stage-card" onclick="showOverlay(2)">
+        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=180&h=270&q=80" alt="Recolección de Información">
+        <div class="stage-number">2</div>
+        <div class="stage-title">Recolección de Información</div>
+      </div>
+      <!-- Etapa 3: Análisis de Alternativas -->
+      <div class="stage-card" onclick="showOverlay(3)">
+        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=180&h=270&q=80" alt="Análisis de Alternativas">
+        <div class="stage-number">3</div>
+        <div class="stage-title">Análisis de Alternativas</div>
+      </div>
+      <!-- Etapa 4: Elección de la Mejor Opción -->
+      <div class="stage-card" onclick="showOverlay(4)">
+        <img src="img/alternativas-pica.png" alt="Elección de la Mejor Opción">
+        <div class="stage-number">4</div>
+        <div class="stage-title">Elección de la Mejor Opción</div>
+      </div>
+      <!-- Etapa 5: Implementación -->
+      <div class="stage-card" onclick="showOverlay(5)">
+        <img src="img/implementar-pica.png" alt="Implementación">
+        <div class="stage-number">5</div>
+        <div class="stage-title">Implementación</div>
+      </div>
+      <!-- Etapa 6: Evaluación de Resultados -->
+      <div class="stage-card" onclick="showOverlay(6)">
+        <img src="img/datos-pica.png" alt="Evaluación de Resultados">
+        <div class="stage-number">6</div>
+        <div class="stage-title">Evaluación de Resultados</div>
+      </div>
+    </div>
+    <!-- Tarjetas de superposición para cada etapa -->
+    <div id="overlay-1" class="overlay-card">
+      <button class="close-overlay" onclick="hideOverlay(1)">×</button>
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300&q=80" alt="Identificación del Problema">
+      <h3>Identificación del Problema</h3>
+      <p>Es el reconocimiento claro y preciso de una situación que requiere una solución. Implica detectar una desviación, necesidad o desafío que afecta los objetivos.</p>
+      <p><strong>Ejemplo:</strong> Una empresa nota que las ventas han disminuido un 20% en el último trimestre.</p>
+    </div>
+    <div id="overlay-2" class="overlay-card">
+      <button class="close-overlay" onclick="hideOverlay(2)">×</button>
+      <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300&q=80" alt="Recolección de Información">
+      <h3>Recolección de Información</h3>
+      <p>Consiste en reunir todos los datos relevantes relacionados con el problema, incluyendo hechos, cifras, opiniones y antecedentes que permitan comprender la situación.</p>
+      <p><strong>Ejemplo:</strong> Analizar encuestas de clientes, revisar reportes de ventas y consultar con el equipo de marketing.</p>
+    </div>
+    <div id="overlay-3" class="overlay-card">
+      <button class="close-overlay" onclick="hideOverlay(3)">×</button>
+      <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300&q=80" alt="Análisis de Alternativas">
+      <h3>Análisis de Alternativas</h3>
+      <p>Se trata de estudiar las posibles soluciones o cursos de acción disponibles, evaluando sus ventajas, desventajas, riesgos y consecuencias.</p>
+      <p><strong>Ejemplo:</strong> Comparar estrategias como aumentar publicidad, reducir precios o lanzar un nuevo producto.</p>
+    </div>
+    <div id="overlay-4" class="overlay-card">
+      <button class="close-overlay" onclick="hideOverlay(4)">×</button>
+      <img src="img/alternativas-pica.png" alt="Elección de la Mejor Opción">
+      <h3>Elección de la Mejor Opción</h3>
+      <p>Es el proceso de seleccionar la alternativa más adecuada según criterios como eficacia, viabilidad, recursos disponibles y alineación con los objetivos.</p>
+      <p><strong>Ejemplo:</strong> Decidir aumentar la publicidad en redes sociales porque es más viable con el presupuesto actual.</p>
+    </div>
+    <div id="overlay-5" class="overlay-card">
+      <button class="close-overlay" onclick="hideOverlay(5)">×</button>
+      <img src="img/implementar-pica.png" alt="Implementación">
+      <h3>Implementación</h3>
+      <p>Implica poner en marcha la decisión tomada, ejecutando las acciones necesarias con los recursos, el personal y el tiempo asignados.</p>
+      <p><strong>Ejemplo:</strong> Contratar una agencia para lanzar una campaña publicitaria en Instagram y TikTok.</p>
+    </div>
+    <div id="overlay-6" class="overlay-card">
+      <button class="close-overlay" onclick="hideOverlay(6)">×</button>
+      <img src="img/datos-pica.png" alt="Evaluación de Resultados">
+      <h3>Evaluación de Resultados</h3>
+      <p>Es la revisión y valoración del impacto de la decisión, para determinar si se resolvió el problema y se lograron los objetivos esperados.</p>
+      <p><strong>Ejemplo:</strong> Verificar que las ventas aumentaron un 15% tras la campaña y ajustar la estrategia si es necesario.</p>
     </div>
   </div>
 
@@ -239,7 +411,7 @@ Además, permite:
         <p class="text-gray-400 text-sm">Un buen proceso te ayuda a enfrentar y solucionar desafíos de manera eficiente.</p>
       </div>
       <div class="reason-card" style="animation-delay: 0.2s">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-5h2v2h-2zm0-8h2v6h-2z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8 8 8 3.59 8 8-3.59 8-8 8zm-1-5h2v2h-2zm0-8h2v6h-2z"/></svg>
         <h3 class="text-lg font-semibold mb-2">Minimizar riesgos</h3>
         <p class="text-gray-400 text-sm">Toma decisiones informadas para reducir posibles errores.</p>
       </div>
@@ -267,16 +439,6 @@ Además, permite:
       carousel.scrollBy({ left: 300, behavior: 'smooth' });
     }
 
-    function scrollLeftAdditional() {
-      const carousel = document.getElementById('additionalCarousel');
-      carousel.scrollBy({ left: -300, behavior: 'smooth' });
-    }
-
-    function scrollRightAdditional() {
-      const carousel = document.getElementById('additionalCarousel');
-      carousel.scrollBy({ left: 300, behavior: 'smooth' });
-    }
-
     function openModal(title, subtitle, duration, tags, description) {
       document.getElementById('modalTitle').textContent = title;
       document.getElementById('modalDetails').textContent = `${subtitle} • ${duration}`;
@@ -299,6 +461,23 @@ Además, permite:
       if (event.target === modal) {
         closeModal();
       }
+    }
+
+    let activeOverlay = null;
+
+    function showOverlay(id) {
+      if (activeOverlay) {
+        activeOverlay.classList.remove('active');
+      }
+      const overlay = document.getElementById(`overlay-${id}`);
+      overlay.classList.add('active');
+      activeOverlay = overlay;
+    }
+
+    function hideOverlay(id) {
+      const overlay = document.getElementById(`overlay-${id}`);
+      overlay.classList.remove('active');
+      activeOverlay = null;
     }
   </script>
 </body>
