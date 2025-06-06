@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aprende sobre Toma de Decisiones</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .movie-carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 1rem 0;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .movie-carousel::-webkit-scrollbar {
+      display: none;
+    }
+    .movie-card {
+      position: relative;
+      flex: 0 0 auto;
+      margin-right: 0.75rem;
+      transition: transform 0.3s ease;
+    }
+    .movie-card:hover {
+      transform: scale(1.1);
+      cursor: pointer;
+      z-index: 1;
+    }
+    .movie-card img {
+      width: 180px;
+      height: 270px;
+      object-fit: cover;
+      border-radius: 0.25rem;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    .movie-number {
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      font-size: 5rem;
+      font-weight: 900;
+      color: white;
+      opacity: 0.9;
+      text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);
+      z-index: 2;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 20;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #141414;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      max-width: 600px;
+      width: 90%;
+      position: relative;
+    }
+    .close-modal {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.5rem;
+      color: white;
+      cursor: pointer;
+    }
+    .nav-arrow {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 0.5rem;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      color: white;
+      transition: background 0.3s ease;
+    }
+    .nav-arrow:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+    .reason-card {
+      background: linear-gradient(145deg, rgba(20, 20, 40, 0.9), rgba(40, 40, 60, 0.9));
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      text-align: left;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+      backdrop-filter: blur(5px);
+    }
+    .reason-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 15px rgba(82, 82, 255, 0.2);
+    }
+    .reason-card svg {
+      width: 2.5rem;
+      height: 2.5rem;
+      margin-bottom: 1rem;
+      fill: #ff2e63;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reason-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem 1rem;
+      background: linear-gradient(to bottom, #000, #1a1a1a);
+    }
+    .additional-carousel img {
+      width: 160px;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 0.25rem;
+      transition: transform 0.3s ease;
+    }
+    .additional-carousel .movie-card:hover img {
+      transform: scale(1.1);
+    }
+    .modal-video {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body class="bg-black text-white">
+  <nav class="fixed top-0 w-full bg-black bg-opacity-80 p-4 flex justify-between items-center z-10">
+    <div class="text-red-600 text-3xl font-bold">INVESTIGACIÓN DE OPERACIONES</div>
+    <div class="space-x-4">
+      <button class="bg-red-600 px-4 py-2 rounded hover:bg-red-700">Iniciar Sesión</button>
+      <button class="bg-gray-600 px-4 py-2 rounded hover:bg-gray-700">Perfil</button>
+    </div>
+  </nav>
+
+
+//DEFINICION DE LA Toma de decisiones, concepto general//
+//La toma de decisiones es fundamental porque influye directamente en los resultados de una organización, un proyecto o incluso de nuestras acciones personales. Tomar decisiones implica elegir entre dos o más alternativas, y esa elección puede tener consecuencias positivas o negativas. Por eso es crucial hacerlo de forma racional y basada en datos. En el contexto empresarial, por ejemplo, una mala decisión puede generar pérdidas económicas, mientras que una buena decisión optimiza recursos y mejora la competitividad.
+Además, permite:
+•	Resolver problemas complejos
+•	Minimizar riesgos
+•	Aprovechar oportunidades
+•	Y orientar mejor los esfuerzos del equipo de trabajo
+//
+
+
+  <div class="mt-16 px-8 py-6">
+    <h2 class="text-2xl font-bold mb-4">IMPORTANCIA DE LA TOMA DE DECISIONES</h2>
+    <div class="relative">
+      <div class="movie-carousel additional-carousel" id="additionalCarousel">
+        <div class="movie-card" onclick="openModal('Identificar el problema', 'Etapa 1', '3 min de lectura', 'Diagnóstico, Análisis', 'Ejemplo: Identificar la necesidad de un plan de celular económico con internet y minutos para estudiantes.')">
+          <img src="https://source.unsplash.com/random/200x300?problem" alt="Identificar">
+        </div>
+        <div class="movie-card" onclick="openModal('Recolección de información', 'Etapa 2', '3 min de lectura', 'Datos, Investigación', 'Ejemplo: Buscar planes de celular - Plan A: $10 (5 GB, 100 min), Plan B: $12 (6 GB, 200 min, redes sociales), Plan C: $8 (3 GB, 50 min).')">
+          <img src="https://source.unsplash.com/random/200x300?research" alt="Recolección">
+        </div>
+        <div class="movie-card" onclick="openModal('Análisis de alternativas', 'Etapa 3', '3 min de lectura', 'Opciones, Evaluación', 'Ejemplo: Comparar planes por gigas, minutos, redes sociales y precio para elegir el mejor.')">
+          <img src="https://source.unsplash.com/random/200x300?analysis" alt="Analizar">
+        </div>
+        <div class="movie-card" onclick="openModal('Elección de la mejor opción', 'Etapa 4', '3 min de lectura', 'Selección, Decisión', 'Ejemplo: Elegir el Plan B ($12) por más GB, minutos y redes sociales ilimitadas.')">
+          <img src="https://source.unsplash.com/random/200x300?choice" alt="Elegir">
+        </div>
+        <div class="movie-card" onclick="openModal('Implementación', 'Etapa 5', '3 min de lectura', 'Ejecución, Acción', 'Ejemplo: Contratar el Plan B a través de la app de la operadora.')">
+          <img src="https://source.unsplash.com/random/200x300?execution" alt="Implementar">
+        </div>
+        <div class="movie-card" onclick="openModal('Evaluación de resultados', 'Etapa 6', '3 min de lectura', 'Revisión, Feedback', 'Ejemplo: Verificar que el Plan B permite asistir a clases virtuales y usar redes sociales sin problemas.')">
+          <img src="https://source.unsplash.com/random/200x300?assessment" alt="Evaluar">
+        </div>
+      </div>
+      <button class="absolute top-10 left-0 transform -translate-y-1/2 nav-arrow" onclick="scrollLeftAdditional()">❮</button>
+      <button class="absolute top-10 right-0 transform -translate-y-1/2 nav-arrow" onclick="scrollRightAdditional()">❯</button>
+    </div>
+  </div>
+
+
+  <div class="mt-16 px-8 py-6">
+    <h2 class="text-2xl font-bold mb-4">ETAPAS DE LA TOMA DE DECISIONES</h2>
+    <div class="relative">
+      <div class="movie-carousel" id="movieCarousel">
+        <div class="movie-card" onclick="openModal('¿Qué es la toma de decisiones?', 'Concepto', '5 min de lectura', 'Definición, Proceso', 'Tomar decisiones implica elegir entre dos o más alternativas, y esa elección puede tener consecuencias positivas o negativas.')">
+          <img src="img/img4.jpeg" alt="Definición">
+          <div class="movie-number">1</div>
+        </div>
+        <div class="movie-card" onclick="openModal('Importancia de la toma de decisiones', 'Relevancia', '5 min de lectura', 'Impacto, Beneficios', 'Influye directamente en los resultados de una organización, un proyecto o nuestras acciones personales.')">
+          <img src="img/img4.jpeg" alt="Importancia">
+          <div class="movie-number">2</div>
+        </div>
+        <div class="movie-card" onclick="openModal('Etapas de la toma de decisiones', 'Proceso', '5 min de lectura', 'Pasos, Metodología', 'Existen diferentes modelos, desde enfoques racionales hasta los basados en intuición o información limitada.')">
+          <img src="img/img4.jpeg" alt="Etapas">
+          <div class="movie-number">3</div>
+        </div>
+        <div class="movie-card" onclick="openModal('Identificar el problema', 'Etapa 1', '3 min de lectura', 'Diagnóstico, Análisis', 'Reconocimiento claro y preciso de una situación que requiere una solución.')">
+          <img src="img/img4.jpeg" alt="Identificar">
+          <div class="movie-number">4</div>
+        </div>
+        <div class="movie-card" onclick="openModal('Recolección de información', 'Etapa 2', '3 min de lectura', 'Datos, Investigación', 'Reunir datos relevantes como hechos, cifras, opiniones y antecedentes.')">
+          <img src="img/img4.jpeg" alt="Recolección">
+          <div class="movie-number">5</div>
+        </div>
+        <div class="movie-card" onclick="openModal('Análisis de alternativas', 'Etapa 3', '3 min de lectura', 'Opciones, Evaluación', 'Estudiar posibles soluciones, evaluando ventajas, desventajas y riesgos.')">
+          <img src="img/img4.jpeg" alt="Analizar">
+          <div class="movie-number">6</div>
+        </div>
+      </div>
+      <button class="absolute top-1/2 left-0 transform -translate-y-1/2 nav-arrow" onclick="scrollLeftCarousel()">❮</button>
+      <button class="absolute top-1/2 right-0 transform -translate-y-1/2 nav-arrow" onclick="scrollRightCarousel()">❯</button>
+    </div>
+  </div>
+
+  <div id="movieModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">×</span>
+      <video class="modal-video" src="https://videos.pexels.com/video-files/855564/855564-hd_1920_1080_30fps.mp4" autoplay muted loop></video>
+      <h2 id="modalTitle" class="text-3xl font-bold mb-2"></h2>
+      <p id="modalDetails" class="text-gray-400 mb-3"></p>
+      <p id="modalGenres" class="text-gray-400 mb-3"></p>
+      <p id="modalDesc" class="mb-4"></p>
+      <button class="bg-red-600 px-6 py-2 rounded hover:bg-red-700" onclick="closeModal()">Okey</button>
+    </div>
+  </div>
+
+  <div class="px-8 py-6">
+    <h2 class="text-2xl font-bold mb-6">¿Por qué aprender sobre la toma de decisiones?</h2>
+    <div class="reason-container">
+      <div class="reason-card" style="animation-delay: 0s">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10-4.48-10-10-10zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        <h3 class="text-lg font-semibold mb-2">Resolver problemas complejos</h3>
+        <p class="text-gray-400 text-sm">Un buen proceso te ayuda a enfrentar y solucionar desafíos de manera eficiente.</p>
+      </div>
+      <div class="reason-card" style="animation-delay: 0.2s">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-5h2v2h-2zm0-8h2v6h-2z"/></svg>
+        <h3 class="text-lg font-semibold mb-2">Minimizar riesgos</h3>
+        <p class="text-gray-400 text-sm">Toma decisiones informadas para reducir posibles errores.</p>
+      </div>
+      <div class="reason-card" style="animation-delay: 0.4s">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-2h-2v2zm0-4h2V7h-2z"/></svg>
+        <h3 class="text-lg font-semibold mb-2">Aprovechar oportunidades</h3>
+        <p class="text-gray-400 text-sm">Identifica y utiliza las mejores opciones para avanzar.</p>
+      </div>
+      <div class="reason-card" style="animation-delay: 0.6s">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-2h-2v2zm0-4h2V7h-2z"/></svg>
+        <h3 class="text-lg font-semibold mb-2">Orientar esfuerzos</h3>
+        <p class="text-gray-400 text-sm">Dirige al equipo hacia metas claras y bien definidas.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function scrollLeftCarousel() {
+      const carousel = document.getElementById('movieCarousel');
+      carousel.scrollBy({ left: -300, behavior: 'smooth' });
+    }
+
+    function scrollRightCarousel() {
+      const carousel = document.getElementById('movieCarousel');
+      carousel.scrollBy({ left: 300, behavior: 'smooth' });
+    }
+
+    function scrollLeftAdditional() {
+      const carousel = document.getElementById('additionalCarousel');
+      carousel.scrollBy({ left: -300, behavior: 'smooth' });
+    }
+
+    function scrollRightAdditional() {
+      const carousel = document.getElementById('additionalCarousel');
+      carousel.scrollBy({ left: 300, behavior: 'smooth' });
+    }
+
+    function openModal(title, subtitle, duration, tags, description) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalDetails').textContent = `${subtitle} • ${duration}`;
+      document.getElementById('modalGenres').textContent = tags;
+      document.getElementById('modalDesc').textContent = description;
+      document.getElementById('movieModal').style.display = 'flex';
+      const video = document.querySelector('.modal-video');
+      video.play();
+    }
+
+    function closeModal() {
+      document.getElementById('movieModal').style.display = 'none';
+      const video = document.querySelector('.modal-video');
+      video.pause();
+      video.currentTime = 0;
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById('movieModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+  </script>
+</body>
+</html>
